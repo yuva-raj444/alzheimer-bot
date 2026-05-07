@@ -143,9 +143,7 @@ def adaptive_k(query):
 
 def calculate_confidence(distance):
 
-    confidence = (1 / (1 + distance)) * 100
-
-    confidence = max(0, min(100, confidence))
+    confidence = max(0, 100 - (distance * 10))
 
     return round(confidence, 2)
 
@@ -360,20 +358,24 @@ if query:
 
             top_distance = retrieved[0]["distance"]
 
-            confidence = calculate_confidence(top_distance)
+            confidence = max(0, 100 - (top_distance * 10))
+
+            confidence = round(confidence, 2)
+
+            reference_answer = retrieved[0]["answer"]
 
             similarity = semantic_similarity(
-                query,
+                reference_answer,
                 final_answer
             )
 
             bleu = calculate_bleu(
-                combined_context,
+                reference_answer,
                 final_answer
             )
 
             rouge = calculate_rouge(
-                combined_context,
+                reference_answer,
                 final_answer
             )
 
