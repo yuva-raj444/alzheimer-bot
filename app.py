@@ -197,21 +197,22 @@ def generate_answer(query, retrieved_chunks):
     ])
 
     prompt = f"""
-You are a helpful medical AI assistant.
+You are EARACT AI, a helpful medical assistant specialized in Alzheimer’s Disease.
 
-Answer ONLY using the provided context.
+Use the provided context to answer the user's question clearly and naturally.
 
-If the answer is not available in context,
-say:
+Provide detailed but concise answers.
+
+If the answer is not found in the context, say:
 "I could not find enough information."
 
-You can answer greetings naturally.
+Question:
+{query}
 
-Question: {query}
+Context:
+{context}
 
-Context: {context}
-
-Answer:
+Detailed Answer:
 """
 
     inputs = tokenizer(
@@ -223,10 +224,11 @@ Answer:
 
     outputs = generator_model.generate(
         **inputs,
-        max_length=150,
-        num_beams=5,
-        early_stopping=True,
-        temperature=0.7
+        max_new_tokens=256,
+        do_sample=True,
+        temperature=0.9,
+        top_p=0.95,
+        repetition_penalty=1.2
     )
 
     answer = tokenizer.decode(
