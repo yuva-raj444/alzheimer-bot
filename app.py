@@ -1,12 +1,7 @@
-# app.py
-
-```python
 import streamlit as st
 import faiss
 import pickle
 import numpy as np
-import torch
-import pandas as pd
 
 from sentence_transformers import SentenceTransformer
 from transformers import T5Tokenizer, T5ForConditionalGeneration
@@ -34,42 +29,27 @@ st.markdown(
     """
     <style>
 
-    .main {
+    .stApp {
         background-color: #0f1117;
         color: white;
     }
 
-    .stChatMessage {
-        border-radius: 16px;
-        padding: 10px;
-    }
-
-    .metric-card {
-        background: #1e1e2f;
-        padding: 15px;
-        border-radius: 16px;
-        text-align: center;
-        border: 1px solid #2f2f45;
-    }
-
     .title {
-        font-size: 40px;
+        font-size: 42px;
         font-weight: bold;
         color: #4cc9f0;
+        margin-bottom: 5px;
     }
 
     .subtitle {
         font-size: 18px;
         color: #b0b3c6;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
 
-    .retrieval-box {
-        background: #161b22;
-        padding: 15px;
-        border-radius: 14px;
-        border: 1px solid #30363d;
-        margin-bottom: 10px;
+    .stChatMessage {
+        border-radius: 16px;
+        padding: 10px;
     }
 
     </style>
@@ -81,7 +61,11 @@ st.markdown(
 # HEADER
 # =====================================================
 
-st.markdown('<div class="title">🧠 EARACT AI</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="title">🧠 EARACT AI</div>',
+    unsafe_allow_html=True
+)
+
 st.markdown(
     '<div class="subtitle">Explainable Adaptive Retrieval-Augmented Conversational Transformer</div>',
     unsafe_allow_html=True
@@ -92,13 +76,11 @@ st.markdown(
 # =====================================================
 
 @st.cache_resource
-
 def load_embedding_model():
     return SentenceTransformer("all-MiniLM-L6-v2")
 
 
 @st.cache_resource
-
 def load_generator_model():
 
     tokenizer = T5Tokenizer.from_pretrained("t5-small")
@@ -108,32 +90,32 @@ def load_generator_model():
 
 
 embedding_model = load_embedding_model()
+
 tokenizer, generator_model = load_generator_model()
 
 # =====================================================
-# LOAD FILES
+# LOAD SAVED FILES
 # =====================================================
 
 @st.cache_resource
-
 def load_index():
     return faiss.read_index("index.faiss")
 
 
 @st.cache_resource
-
 def load_metadata():
+
     with open("metadata.pkl", "rb") as f:
         return pickle.load(f)
 
 
 index = load_index()
+
 metadata = load_metadata()
 
 # =====================================================
 # ADAPTIVE RETRIEVAL
 # =====================================================
-
 
 def adaptive_k(query):
 
@@ -152,7 +134,6 @@ def adaptive_k(query):
 # CONFIDENCE SCORE
 # =====================================================
 
-
 def calculate_confidence(distance):
 
     confidence = (1 / (1 + distance)) * 100
@@ -162,9 +143,8 @@ def calculate_confidence(distance):
     return round(confidence, 2)
 
 # =====================================================
-# RETRIEVE CONTEXT
+# RETRIEVAL
 # =====================================================
-
 
 def retrieve_context(query):
 
@@ -195,7 +175,6 @@ def retrieve_context(query):
 # =====================================================
 # GENERATE ANSWER
 # =====================================================
-
 
 def generate_answer(query, retrieved_chunks):
 
@@ -247,13 +226,16 @@ Answer:
 # SEMANTIC SIMILARITY
 # =====================================================
 
-
 def semantic_similarity(query, answer):
 
     q_embed = embedding_model.encode([query])
+
     a_embed = embedding_model.encode([answer])
 
-    similarity = cosine_similarity(q_embed, a_embed)[0][0]
+    similarity = cosine_similarity(
+        q_embed,
+        a_embed
+    )[0][0]
 
     return round(float(similarity), 4)
 
@@ -261,12 +243,12 @@ def semantic_similarity(query, answer):
 # BLEU SCORE
 # =====================================================
 
-
 def calculate_bleu(reference, generated):
 
     try:
 
         reference_tokens = [reference.split()]
+
         generated_tokens = generated.split()
 
         bleu = sentence_bleu(
@@ -282,7 +264,6 @@ def calculate_bleu(reference, generated):
 # =====================================================
 # ROUGE SCORE
 # =====================================================
-
 
 def calculate_rouge(reference, generated):
 
@@ -319,7 +300,7 @@ with st.sidebar:
     st.success("EARACT Framework")
 
 # =====================================================
-# CHAT MEMORY
+# CHAT HISTORY
 # =====================================================
 
 if "messages" not in st.session_state:
@@ -331,7 +312,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # =====================================================
-# USER INPUT
+# CHAT INPUT
 # =====================================================
 
 query = st.chat_input("Ask a medical question...")
@@ -381,7 +362,7 @@ if query:
             )
 
             # =====================================
-            # ANSWER DISPLAY
+            # ANSWER
             # =====================================
 
             st.markdown(final_answer)
@@ -396,37 +377,32 @@ if query:
 
             col1, col2, col3 = st.columns(3)
 
-            with col1:
-                st.metric(
-                    "Confidence",
-                    f"{confidence}%"
-                )
+            col1.metric(
+                "Confidence",
+                f"{confidence}%"
+            )
 
-            with col2:
-                st.metric(
-                    "Semantic Similarity",
-                    similarity
-                )
+            col2.metric(
+                "Semantic Similarity",
+                similarity
+            )
 
-            with col3:
-                st.metric(
-                    "BLEU Score",
-                    bleu
-                )
+            col3.metric(
+                "BLEU Score",
+                bleu
+            )
 
             col4, col5 = st.columns(2)
 
-            with col4:
-                st.metric(
-                    "ROUGE-1",
-                    rouge["ROUGE-1"]
-                )
+            col4.metric(
+                "ROUGE-1",
+                rouge["ROUGE-1"]
+            )
 
-            with col5:
-                st.metric(
-                    "ROUGE-L",
-                    rouge["ROUGE-L"]
-                )
+            col5.metric(
+                "ROUGE-L",
+                rouge["ROUGE-L"]
+            )
 
             # =====================================
             # RETRIEVED CONTEXTS
@@ -446,21 +422,17 @@ if query:
                     st.markdown("### Answer")
                     st.write(item["answer"])
 
-                    st.markdown("### Retrieval Metrics")
-
                     c1, c2 = st.columns(2)
 
-                    with c1:
-                        st.metric(
-                            "Distance",
-                            round(item["distance"], 4)
-                        )
+                    c1.metric(
+                        "Distance",
+                        round(item["distance"], 4)
+                    )
 
-                    with c2:
-                        st.metric(
-                            "Confidence",
-                            f"{item['confidence']}%"
-                        )
+                    c2.metric(
+                        "Confidence",
+                        f"{item['confidence']}%"
+                    )
 
             # =====================================
             # COMBINED CONTEXT
