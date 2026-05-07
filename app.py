@@ -202,7 +202,7 @@ You are EARACT AI, a helpful medical assistant specialized in Alzheimer’s Dise
 Use the provided context to answer the user's question clearly and naturally.
 
 Provide detailed but concise answers.
-
+Reply for Hi,Hello,Hey greetings.
 If the answer is not found in the context, say:
 "I could not find enough information."
 
@@ -224,8 +224,8 @@ Detailed Answer:
 
     outputs = generator_model.generate(
     **inputs,
-    max_new_tokens=300,
-    min_length=80,
+    max_new_tokens=220,
+    min_length=50,
     do_sample=True,
     temperature=0.85,
     top_p=0.92,
