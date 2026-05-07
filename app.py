@@ -179,11 +179,13 @@ def retrieve_context(query):
         item = metadata[idx]
 
         retrieved.append({
-            "question": item["question"],
-            "answer": item["answer"],
-            "distance": float(dist),
-            "confidence": calculate_confidence(float(dist))
+             "question": item["Questions"],
+             "answer": item["Answers"],
+             "distance": float(dist),
+             "confidence": calculate_confidence(float(dist))
         })
+ 
+
 
     return retrieved
 
