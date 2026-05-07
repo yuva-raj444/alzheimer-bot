@@ -75,16 +75,22 @@ st.markdown(
 # LOAD MODELS
 # =====================================================
 
+EMBEDDING_MODEL = "BAAI/bge-base-en-v1.5"
+GENERATOR_MODEL = "google/flan-t5-base"
+
 @st.cache_resource
 def load_embedding_model():
-    return SentenceTransformer("all-MiniLM-L6-v2")
+    return SentenceTransformer(EMBEDDING_MODEL)
 
 
 @st.cache_resource
 def load_generator_model():
 
-    tokenizer = T5Tokenizer.from_pretrained("t5-small")
-    model = T5ForConditionalGeneration.from_pretrained("t5-small")
+    tokenizer = T5Tokenizer.from_pretrained(GENERATOR_MODEL)
+
+    model = T5ForConditionalGeneration.from_pretrained(
+        GENERATOR_MODEL
+    )
 
     return tokenizer, model
 
@@ -143,17 +149,24 @@ def calculate_confidence(distance):
     return round(confidence, 2)
 
 # =====================================================
-# RETRIEVAL
+# RETRIEVE CONTEXT
 # =====================================================
 
 def retrieve_context(query):
 
     top_k = adaptive_k(query)
 
-    query_embedding = embedding_model.encode([query])
+    query_embedding = embedding_model.encode(
+        [query],
+        normalize_embeddings=True
+    )
+
+    query_embedding = np.array(
+        query_embedding
+    ).astype("float32")
 
     distances, indices = index.search(
-        np.array(query_embedding).astype("float32"),
+        query_embedding,
         top_k
     )
 
@@ -209,7 +222,7 @@ Answer:
 
     outputs = generator_model.generate(
         **inputs,
-        max_length=120,
+        max_length=150,
         num_beams=5,
         early_stopping=True,
         temperature=0.7
@@ -288,10 +301,10 @@ with st.sidebar:
     st.header("⚙ System Information")
 
     st.write("Embedding Model")
-    st.info("all-MiniLM-L6-v2")
+    st.info(EMBEDDING_MODEL)
 
     st.write("Generator Model")
-    st.info("t5-small")
+    st.info(GENERATOR_MODEL)
 
     st.write("Vector Database")
     st.info("FAISS")
