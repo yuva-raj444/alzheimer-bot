@@ -223,13 +223,14 @@ Detailed Answer:
     )
 
     outputs = generator_model.generate(
-        **inputs,
-        max_new_tokens=256,
-        do_sample=True,
-        temperature=0.9,
-        top_p=0.95,
-        repetition_penalty=1.2
-    )
+    **inputs,
+    max_new_tokens=300,
+    min_length=80,
+    do_sample=True,
+    temperature=0.85,
+    top_p=0.92,
+    repetition_penalty=1.3
+)
 
     answer = tokenizer.decode(
         outputs[0],
