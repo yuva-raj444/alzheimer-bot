@@ -118,8 +118,7 @@ def load_metadata():
 index = load_index()
 
 metadata = load_metadata()
-st.write(type(metadata))
-st.write(metadata[0])
+
 
 # =====================================================
 # ADAPTIVE RETRIEVAL
