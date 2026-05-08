@@ -43,10 +43,26 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* Inputs */
+    /* Inputs (general) */
     textarea, input, .stTextInput input {
         color: #ffffff !important;
         background-color: #2a2d3a !important;
+    }
+
+    /* Chat input: make it normal and readable */
+    .stChatInput textarea, .stChatInput input,
+    [data-testid="stChatInput"] textarea,
+    [data-testid="stChatInput"] input {
+        background-color: #f5f6fa !important;
+        color: #111111 !important;
+        border: 1px solid #d0d4e0 !important;
+    }
+
+    .stChatInput textarea::placeholder,
+    .stChatInput input::placeholder,
+    [data-testid="stChatInput"] textarea::placeholder,
+    [data-testid="stChatInput"] input::placeholder {
+        color: #6b7280 !important;
     }
 
     .title {
@@ -71,7 +87,8 @@ st.markdown(
     .viewerBadge_container__1QSob,
     .viewerBadge_link__1S6rR,
     .stApp [data-testid="stToolbar"],
-    .stApp [data-testid="stStatusWidget"] {
+    .stApp [data-testid="stStatusWidget"],
+    .stApp [data-testid="stDecoration"] {
         display: none !important;
     }
 
