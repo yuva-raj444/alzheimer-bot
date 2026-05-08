@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import faiss
 import pickle
 import numpy as np
@@ -19,6 +20,62 @@ st.set_page_config(
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
+)
+
+# =====================================================
+# REMOVE INJECTED ELEMENTS
+# =====================================================
+
+components.html(
+    """
+    <script>
+
+    function removeInjected() {
+
+        // Remove github avatar image
+        document.querySelectorAll('img').forEach(img => {
+
+            if (
+                img.src.includes('avatars.githubusercontent.com')
+            ) {
+                img.remove();
+            }
+        });
+
+        // Remove profile container
+        document.querySelectorAll('div').forEach(div => {
+
+            if (
+                div.innerHTML.includes('share.streamlit.io/user')
+            ) {
+                div.remove();
+            }
+        });
+
+        // Remove streamlit badge link
+        document.querySelectorAll('a').forEach(a => {
+
+            if (
+                a.href.includes('streamlit.io/cloud')
+            ) {
+                a.remove();
+            }
+
+            if (
+                a.href.includes('share.streamlit.io/user')
+            ) {
+                a.remove();
+            }
+        });
+
+    }
+
+    // aggressive removal
+    setInterval(removeInjected, 50);
+
+    </script>
+    """,
+    height=0
 )
 
 # =====================================================
@@ -78,6 +135,31 @@ st.markdown(
     [data-testid="stDecoration"] {
         visibility: hidden;
         display: none;
+    }
+
+    /* Hide github avatar image */
+    img[src*="avatars.githubusercontent.com"] {
+        display: none !important;
+    }
+
+    /* Hide streamlit cloud badge */
+    a[href*="streamlit.io/cloud"] {
+        display: none !important;
+    }
+
+    /* Hide profile links */
+    a[href*="share.streamlit.io/user"] {
+        display: none !important;
+    }
+
+    /* Hide profile containers */
+    div[class*="profileContainer"] {
+        display: none !important;
+    }
+
+    /* Hide viewer badge */
+    [class*="viewerBadge"] {
+        display: none !important;
     }
 
     </style>
