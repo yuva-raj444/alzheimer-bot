@@ -96,6 +96,65 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.markdown(
+    """
+    <script>
+
+    function removeInjectedElements() {
+
+        // Remove Streamlit cloud badge link
+        document.querySelectorAll('a[href="https://streamlit.io/cloud"]').forEach(el => {
+            el.remove();
+        });
+
+        // Remove creator profile container
+        document.querySelectorAll('div[class*="profileContainer"]').forEach(el => {
+            el.remove();
+        });
+
+        // Remove avatar image
+        document.querySelectorAll('[data-testid="appCreatorAvatar"]').forEach(el => {
+            el.remove();
+        });
+
+        // Remove profile links
+        document.querySelectorAll('a[href*="share.streamlit.io/user"]').forEach(el => {
+            el.remove();
+        });
+
+        // Remove viewer badge
+        document.querySelectorAll('[class*="viewerBadge"]').forEach(el => {
+            el.remove();
+        });
+
+    }
+
+    // Run continuously because Streamlit reinjects them
+    setInterval(removeInjectedElements, 500);
+
+    </script>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <style>
+
+    a[href="https://streamlit.io/cloud"],
+    a[href*="share.streamlit.io/user"],
+    [data-testid="appCreatorAvatar"],
+    [class*="viewerBadge"],
+    [class*="profileContainer"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # =====================================================
 # HEADER
 # =====================================================
