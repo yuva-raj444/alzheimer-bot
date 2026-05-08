@@ -86,14 +86,26 @@ st.markdown(
     /* Hide Streamlit/GitHub badge + footer (mobile & desktop) */
     .viewerBadge_container__1QSob,
     .viewerBadge_link__1S6rR,
-    .stApp [data-testid="stToolbar"],
-    .stApp [data-testid="stStatusWidget"],
-    .stApp [data-testid="stDecoration"],
-    .stApp [data-testid="stFooter"],
+    [data-testid="stAppViewerBadge"],
+    [data-testid="stAppViewerBadge"] *,
+    [data-testid="stAppViewerBadgeAnchor"],
+    [data-testid="stToolbar"],
+    [data-testid="stStatusWidget"],
+    [data-testid="stDecoration"],
+    [data-testid="stFooter"],
+    footer,
     .stApp footer,
     .stApp .streamlit-footer,
     .stApp .stFooter,
-    .stApp .stAppFooter {
+    .stApp .stAppFooter,
+    a[href*="streamlit.io"],
+    a[href*="streamlit.app"],
+    a[href*="streamlit"],
+    a[href*="github.com/streamlit"],
+    a[title*="Streamlit"],
+    a[aria-label*="Streamlit"],
+    a[title*="GitHub"],
+    a[aria-label*="GitHub"] {
         display: none !important;
         visibility: hidden !important;
     }
@@ -522,13 +534,3 @@ if query:
         "role": "assistant",
         "content": final_answer
     })
-
-# =====================================================
-# FOOTER
-# =====================================================
-
-st.divider()
-
-st.caption(
-    "EARACT AI • Explainable Adaptive Retrieval-Augmented Conversational Transformer"
-)
