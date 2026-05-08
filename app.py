@@ -110,6 +110,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+st.divider()
+
+st.caption(
+    "EARACT AI • Explainable Adaptive Retrieval-Augmented Conversational Transformer"
+)
+
+
 # =====================================================
 # LOAD MODELS
 # =====================================================
@@ -486,12 +493,3 @@ if query:
         "content": final_answer
     })
 
-# =====================================================
-# FOOTER
-# =====================================================
-
-st.divider()
-
-st.caption(
-    "EARACT AI • Explainable Adaptive Retrieval-Augmented Conversational Transformer"
-)
