@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import faiss
 import pickle
 import numpy as np
@@ -19,7 +18,7 @@ st.set_page_config(
     page_title="EARACT AI",
     page_icon="🧠",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 # =====================================================
@@ -76,129 +75,9 @@ st.markdown(
     [data-testid="stToolbar"],
     [data-testid="stHeader"],
     [data-testid="stStatusWidget"],
-    [data-testid="stDecoration"],
-    [data-testid="stSidebar"],
-    [data-testid="stSidebarNav"],
-    [data-testid="stAppViewerBadge"],
-    [data-testid="appCreatorAvatar"],
-    ._viewerBadge_nim44_23,
-    ._profileContainer_gzau3_53,
-    a[href*="streamlit.io/cloud"],
-    a[href*="share.streamlit.io/user"],
-    a[href*="streamlit.io/"][class*="viewerBadge"],
-    div[class*="viewerBadge"],
-    div[class*="profileContainer"] {
+    [data-testid="stDecoration"] {
         visibility: hidden;
         display: none;
-    }
-
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-components.html(
-    """
-    <script>
-
-    function kill() {
-
-        // Remove streamlit badge
-        const badge = document.querySelector(
-            '#root > div:nth-child(1) > div > div > a'
-        );
-
-        if (badge) {
-            badge.remove();
-        }
-
-        // Remove profile container
-        const profile = document.querySelector(
-            '#root > div:nth-child(1) > div > div > div'
-        );
-
-        if (profile) {
-            profile.remove();
-        }
-
-    }
-
-    // Run repeatedly because Streamlit reinjects them
-    setInterval(kill, 100);
-
-    </script>
-    """,
-    height=0,
-    width=0
-)
-
-st.markdown(
-    """
-    <style>
-
-    #root > div:nth-child(1) > div > div > a,
-    #root > div:nth-child(1) > div > div > div {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <script>
-
-    function removeInjectedElements() {
-
-        // Remove Streamlit cloud badge link
-        document.querySelectorAll('a[href="https://streamlit.io/cloud"]').forEach(el => {
-            el.remove();
-        });
-
-        // Remove creator profile container
-        document.querySelectorAll('div[class*="profileContainer"]').forEach(el => {
-            el.remove();
-        });
-
-        // Remove avatar image
-        document.querySelectorAll('[data-testid="appCreatorAvatar"]').forEach(el => {
-            el.remove();
-        });
-
-        // Remove profile links
-        document.querySelectorAll('a[href*="share.streamlit.io/user"]').forEach(el => {
-            el.remove();
-        });
-
-        // Remove viewer badge
-        document.querySelectorAll('[class*="viewerBadge"]').forEach(el => {
-            el.remove();
-        });
-
-    }
-
-    // Run continuously because Streamlit reinjects them
-    setInterval(removeInjectedElements, 500);
-
-    </script>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <style>
-
-    a[href="https://streamlit.io/cloud"],
-    a[href*="share.streamlit.io/user"],
-    [data-testid="appCreatorAvatar"],
-    [class*="viewerBadge"],
-    [class*="profileContainer"] {
-        display: none !important;
-        visibility: hidden !important;
     }
 
     </style>
@@ -211,7 +90,7 @@ st.markdown(
 # =====================================================
 
 st.markdown(
-    '<div class="title">EARACT AI</div>',
+    '<div class="title">🧠 EARACT AI</div>',
     unsafe_allow_html=True
 )
 
@@ -219,13 +98,6 @@ st.markdown(
     '<div class="subtitle">Explainable Adaptive Retrieval-Augmented Conversational Transformer</div>',
     unsafe_allow_html=True
 )
-
-st.divider()
-
-st.caption(
-    "EARACT AI • Explainable Adaptive Retrieval-Augmented Conversational Transformer"
-)
-
 
 # =====================================================
 # LOAD MODELS
@@ -453,6 +325,26 @@ def calculate_rouge(reference, generated):
     }
 
 # =====================================================
+# SIDEBAR
+# =====================================================
+
+with st.sidebar:
+
+    st.header("⚙ System Information")
+
+    st.write("Embedding Model")
+    st.info(EMBEDDING_MODEL)
+
+    st.write("Generator Model")
+    st.info(GENERATOR_MODEL)
+
+    st.write("Vector Database")
+    st.info("FAISS")
+
+    st.write("Architecture")
+    st.success("EARACT Framework")
+
+# =====================================================
 # CHAT HISTORY
 # =====================================================
 
@@ -530,7 +422,7 @@ if query:
 
             st.divider()
 
-            st.subheader("Evaluation Metrics")
+            st.subheader("📊 Evaluation Metrics")
 
             col1, col2, col3 = st.columns(3)
 
@@ -567,7 +459,7 @@ if query:
 
             st.divider()
 
-            st.subheader("Retrieved Contexts")
+            st.subheader("🔎 Retrieved Contexts")
 
             for i, item in enumerate(retrieved):
 
@@ -595,7 +487,7 @@ if query:
             # COMBINED CONTEXT
             # =====================================
 
-            with st.expander("Combined Context"):
+            with st.expander("📚 Combined Context"):
                 st.write(combined_context)
 
     st.session_state.messages.append({
@@ -603,3 +495,12 @@ if query:
         "content": final_answer
     })
 
+# =====================================================
+# FOOTER
+# =====================================================
+
+st.divider()
+
+st.caption(
+    "EARACT AI • Explainable Adaptive Retrieval-Augmented Conversational Transformer"
+)

@@ -1,8 +1,0 @@
-[client]
-showToolbar = false
-
-[server]
-headless = true
-
-[browser]
-gatherUsageStats = false
