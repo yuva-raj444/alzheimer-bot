@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import faiss
 import pickle
 import numpy as np
@@ -20,62 +19,6 @@ st.set_page_config(
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
-)
-
-# =====================================================
-# REMOVE INJECTED ELEMENTS
-# =====================================================
-
-components.html(
-    """
-    <script>
-
-    function removeInjected() {
-
-        // Remove github avatar image
-        document.querySelectorAll('img').forEach(img => {
-
-            if (
-                img.src.includes('avatars.githubusercontent.com')
-            ) {
-                img.remove();
-            }
-        });
-
-        // Remove profile container
-        document.querySelectorAll('div').forEach(div => {
-
-            if (
-                div.innerHTML.includes('share.streamlit.io/user')
-            ) {
-                div.remove();
-            }
-        });
-
-        // Remove streamlit badge link
-        document.querySelectorAll('a').forEach(a => {
-
-            if (
-                a.href.includes('streamlit.io/cloud')
-            ) {
-                a.remove();
-            }
-
-            if (
-                a.href.includes('share.streamlit.io/user')
-            ) {
-                a.remove();
-            }
-        });
-
-    }
-
-    // aggressive removal
-    setInterval(removeInjected, 50);
-
-    </script>
-    """,
-    height=0
 )
 
 # =====================================================
@@ -135,68 +78,6 @@ st.markdown(
     [data-testid="stDecoration"] {
         visibility: hidden;
         display: none;
-    }
-
-    /* Hide github avatar image */
-    img[src*="avatars.githubusercontent.com"] {
-        display: none !important;
-    }
-
-    /* Hide streamlit cloud badge */
-    a[href*="streamlit.io/cloud"] {
-        display: none !important;
-    }
-
-    /* Hide profile links */
-    a[href*="share.streamlit.io/user"] {
-        display: none !important;
-    }
-
-    /* Hide profile containers */
-    div[class*="profileContainer"] {
-        display: none !important;
-    }
-
-    /* Hide viewer badge */
-    [class*="viewerBadge"] {
-        display: none !important;
-    }
-
-    /* Kill avatar image completely */
-    img[data-testid="appCreatorAvatar"]{
-        display:none !important;
-        visibility:hidden !important;
-        opacity:0 !important;
-        width:0 !important;
-        height:0 !important;
-        min-width:0 !important;
-        min-height:0 !important;
-        max-width:0 !important;
-        max-height:0 !important;
-        overflow:hidden !important;
-        position:absolute !important;
-        z-index:-9999 !important;
-        pointer-events:none !important;
-    }
-
-    /* Kill parent profile wrapper */
-    ._profileContainer_gzau3_53{
-        display:none !important;
-    }
-
-    /* Kill profile preview */
-    ._profilePreview_gzau3_63{
-        display:none !important;
-    }
-
-    /* Kill viewer badge */
-    ._viewerBadge_nim44_23{
-        display:none !important;
-    }
-
-    /* Kill streamlit cloud logo */
-    a[href="https://streamlit.io/cloud"]{
-        display:none !important;
     }
 
     </style>
