@@ -77,7 +77,11 @@ st.markdown(
     [data-testid="stStatusWidget"],
     [data-testid="stDecoration"],
     [data-testid="stSidebar"],
-    [data-testid="stSidebarNav"] {
+    [data-testid="stSidebarNav"],
+    [data-testid="stAppViewerBadge"],
+    [data-testid="appCreatorAvatar"],
+    ._viewerBadge_nim44_23,
+    ._profileContainer_gzau3_53 {
         visibility: hidden;
         display: none;
     }
