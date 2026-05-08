@@ -18,7 +18,7 @@ st.set_page_config(
     page_title="EARACT AI",
     page_icon="🧠",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # =====================================================
@@ -29,52 +29,38 @@ st.markdown(
     """
     <style>
 
-    /* App background + default text */
+    :root {
+        color-scheme: light dark;
+        --app-bg: #ffffff;
+        --app-fg: #111827;
+        --app-accent: #2563eb;
+        --app-muted: #6b7280;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --app-bg: #0f1117;
+            --app-fg: #ffffff;
+            --app-accent: #4cc9f0;
+            --app-muted: #b0b3c6;
+        }
+    }
+
     .stApp {
-        background-color: #0f1117;
-        color: #ffffff;
-    }
-
-    /* Force text to be white across light theme widgets */
-    .stMarkdown, .stText, .stCaption, .stMetric, .stSubheader,
-    .stChatMessage, .stChatMessage p, .stChatMessage div,
-    .stInfo, .stSuccess, .stWarning, .stError, .stCode,
-    label, p, span, div {
-        color: #ffffff !important;
-    }
-
-    /* Inputs (general) */
-    textarea, input, .stTextInput input {
-        color: #ffffff !important;
-        background-color: #2a2d3a !important;
-    }
-
-    /* Chat input: make it normal and readable */
-    .stChatInput textarea, .stChatInput input,
-    [data-testid="stChatInput"] textarea,
-    [data-testid="stChatInput"] input {
-        background-color: #f5f6fa !important;
-        color: #111111 !important;
-        border: 1px solid #d0d4e0 !important;
-    }
-
-    .stChatInput textarea::placeholder,
-    .stChatInput input::placeholder,
-    [data-testid="stChatInput"] textarea::placeholder,
-    [data-testid="stChatInput"] input::placeholder {
-        color: #6b7280 !important;
+        background-color: var(--app-bg);
+        color: var(--app-fg);
     }
 
     .title {
         font-size: 42px;
         font-weight: bold;
-        color: #4cc9f0;
+        color: var(--app-accent);
         margin-bottom: 5px;
     }
 
     .subtitle {
         font-size: 18px;
-        color: #ffffff;
+        color: var(--app-muted);
         margin-bottom: 25px;
     }
 
@@ -83,47 +69,23 @@ st.markdown(
         padding: 10px;
     }
 
-    /* Hide Streamlit/GitHub badge + footer (mobile & desktop) */
-    .viewerBadge_container__1QSob,
-    .viewerBadge_link__1S6rR,
-    [data-testid="stAppViewerBadge"],
-    [data-testid="stAppViewerBadge"] *,
-    [data-testid="stAppViewerBadgeAnchor"],
+    #MainMenu,
+    header,
+    footer,
     [data-testid="stToolbar"],
+    [data-testid="stHeader"],
     [data-testid="stStatusWidget"],
     [data-testid="stDecoration"],
-    [data-testid="stFooter"],
-    footer,
-    .stApp footer,
-    .stApp .streamlit-footer,
-    .stApp .stFooter,
-    .stApp .stAppFooter,
-    a[href*="streamlit.io"],
-    a[href*="streamlit.app"],
-    a[href*="streamlit"],
-    a[href*="github.com/streamlit"],
-    a[title*="Streamlit"],
-    a[aria-label*="Streamlit"],
-    a[title*="GitHub"],
-    a[aria-label*="GitHub"] {
-        display: none !important;
-        visibility: hidden !important;
+    [data-testid="stSidebar"],
+    [data-testid="stSidebarNav"] {
+        visibility: hidden;
+        display: none;
     }
 
     </style>
     """,
     unsafe_allow_html=True
 )
-
-hide_streamlit_style = """
-<style>
-#MainMenu {visibility: hidden;}
-header {visibility: hidden;}
-footer {visibility: hidden;}
-</style>
-"""
-
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # =====================================================
 # HEADER
@@ -365,26 +327,6 @@ def calculate_rouge(reference, generated):
     }
 
 # =====================================================
-# SIDEBAR
-# =====================================================
-
-with st.sidebar:
-
-    st.header("⚙ System Information")
-
-    st.write("Embedding Model")
-    st.info(EMBEDDING_MODEL)
-
-    st.write("Generator Model")
-    st.info(GENERATOR_MODEL)
-
-    st.write("Vector Database")
-    st.info("FAISS")
-
-    st.write("Architecture")
-    st.success("EARACT Framework")
-
-# =====================================================
 # CHAT HISTORY
 # =====================================================
 
@@ -534,3 +476,13 @@ if query:
         "role": "assistant",
         "content": final_answer
     })
+
+# =====================================================
+# FOOTER
+# =====================================================
+
+st.divider()
+
+st.caption(
+    "EARACT AI • Explainable Adaptive Retrieval-Augmented Conversational Transformer"
+)
