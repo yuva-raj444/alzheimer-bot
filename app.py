@@ -162,6 +162,43 @@ st.markdown(
         display: none !important;
     }
 
+    /* Kill avatar image completely */
+    img[data-testid="appCreatorAvatar"]{
+        display:none !important;
+        visibility:hidden !important;
+        opacity:0 !important;
+        width:0 !important;
+        height:0 !important;
+        min-width:0 !important;
+        min-height:0 !important;
+        max-width:0 !important;
+        max-height:0 !important;
+        overflow:hidden !important;
+        position:absolute !important;
+        z-index:-9999 !important;
+        pointer-events:none !important;
+    }
+
+    /* Kill parent profile wrapper */
+    ._profileContainer_gzau3_53{
+        display:none !important;
+    }
+
+    /* Kill profile preview */
+    ._profilePreview_gzau3_63{
+        display:none !important;
+    }
+
+    /* Kill viewer badge */
+    ._viewerBadge_nim44_23{
+        display:none !important;
+    }
+
+    /* Kill streamlit cloud logo */
+    a[href="https://streamlit.io/cloud"]{
+        display:none !important;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
