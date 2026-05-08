@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import faiss
 import pickle
 import numpy as np
@@ -89,6 +90,56 @@ st.markdown(
     div[class*="profileContainer"] {
         visibility: hidden;
         display: none;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+components.html(
+    """
+    <script>
+
+    function kill() {
+
+        // Remove streamlit badge
+        const badge = document.querySelector(
+            '#root > div:nth-child(1) > div > div > a'
+        );
+
+        if (badge) {
+            badge.remove();
+        }
+
+        // Remove profile container
+        const profile = document.querySelector(
+            '#root > div:nth-child(1) > div > div > div'
+        );
+
+        if (profile) {
+            profile.remove();
+        }
+
+    }
+
+    // Run repeatedly because Streamlit reinjects them
+    setInterval(kill, 100);
+
+    </script>
+    """,
+    height=0,
+    width=0
+)
+
+st.markdown(
+    """
+    <style>
+
+    #root > div:nth-child(1) > div > div > a,
+    #root > div:nth-child(1) > div > div > div {
+        display: none !important;
+        visibility: hidden !important;
     }
 
     </style>
