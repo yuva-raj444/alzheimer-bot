@@ -91,6 +91,14 @@ st.markdown(
         display: none;
     }
 
+    button[title="View settings"],
+    button[kind="header"],
+    button[data-testid="baseButton-headerNoPadding"],
+    [data-testid="stBottomBlockContainer"],
+    iframe {
+        display: none !important;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -486,12 +494,3 @@ if query:
         "content": final_answer
     })
 
-# =====================================================
-# FOOTER
-# =====================================================
-
-st.divider()
-
-st.caption(
-    "EARACT AI • Explainable Adaptive Retrieval-Augmented Conversational Transformer"
-)
