@@ -81,7 +81,12 @@ st.markdown(
     [data-testid="stAppViewerBadge"],
     [data-testid="appCreatorAvatar"],
     ._viewerBadge_nim44_23,
-    ._profileContainer_gzau3_53 {
+    ._profileContainer_gzau3_53,
+    a[href*="streamlit.io/cloud"],
+    a[href*="share.streamlit.io/user"],
+    a[href*="streamlit.io/"][class*="viewerBadge"],
+    div[class*="viewerBadge"],
+    div[class*="profileContainer"] {
         visibility: hidden;
         display: none;
     }
