@@ -101,7 +101,7 @@ st.markdown(
 # =====================================================
 
 st.markdown(
-    '<div class="title">🧠 EARACT AI</div>',
+    '<div class="title">EARACT AI</div>',
     unsafe_allow_html=True
 )
 
@@ -420,7 +420,7 @@ if query:
 
             st.divider()
 
-            st.subheader("📊 Evaluation Metrics")
+            st.subheader("Evaluation Metrics")
 
             col1, col2, col3 = st.columns(3)
 
@@ -457,7 +457,7 @@ if query:
 
             st.divider()
 
-            st.subheader("🔎 Retrieved Contexts")
+            st.subheader("Retrieved Contexts")
 
             for i, item in enumerate(retrieved):
 
@@ -485,7 +485,7 @@ if query:
             # COMBINED CONTEXT
             # =====================================
 
-            with st.expander("📚 Combined Context"):
+            with st.expander("Combined Context"):
                 st.write(combined_context)
 
     st.session_state.messages.append({
