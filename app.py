@@ -29,9 +29,24 @@ st.markdown(
     """
     <style>
 
+    /* App background + default text */
     .stApp {
         background-color: #0f1117;
-        color: white;
+        color: #ffffff;
+    }
+
+    /* Force text to be white across light theme widgets */
+    .stMarkdown, .stText, .stCaption, .stMetric, .stSubheader,
+    .stChatMessage, .stChatMessage p, .stChatMessage div,
+    .stInfo, .stSuccess, .stWarning, .stError, .stCode,
+    label, p, span, div {
+        color: #ffffff !important;
+    }
+
+    /* Inputs */
+    textarea, input, .stTextInput input {
+        color: #ffffff !important;
+        background-color: #2a2d3a !important;
     }
 
     .title {
@@ -43,13 +58,21 @@ st.markdown(
 
     .subtitle {
         font-size: 18px;
-        color: #b0b3c6;
+        color: #ffffff;
         margin-bottom: 25px;
     }
 
     .stChatMessage {
         border-radius: 16px;
         padding: 10px;
+    }
+
+    /* Hide Streamlit/GitHub badge (mobile & desktop) */
+    .viewerBadge_container__1QSob,
+    .viewerBadge_link__1S6rR,
+    .stApp [data-testid="stToolbar"],
+    .stApp [data-testid="stStatusWidget"] {
+        display: none !important;
     }
 
     </style>
