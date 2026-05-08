@@ -83,13 +83,19 @@ st.markdown(
         padding: 10px;
     }
 
-    /* Hide Streamlit/GitHub badge (mobile & desktop) */
+    /* Hide Streamlit/GitHub badge + footer (mobile & desktop) */
     .viewerBadge_container__1QSob,
     .viewerBadge_link__1S6rR,
     .stApp [data-testid="stToolbar"],
     .stApp [data-testid="stStatusWidget"],
-    .stApp [data-testid="stDecoration"] {
+    .stApp [data-testid="stDecoration"],
+    .stApp [data-testid="stFooter"],
+    .stApp footer,
+    .stApp .streamlit-footer,
+    .stApp .stFooter,
+    .stApp .stAppFooter {
         display: none !important;
+        visibility: hidden !important;
     }
 
     </style>
